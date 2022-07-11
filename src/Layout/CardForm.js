@@ -33,7 +33,7 @@ function CardForm({ formData, setFormData, handleSave}) {
                     {add ? <li className="breadcrumb-item active">Add Card</li> : <li className="breadcrumb-item active">Edit Card {formData.id} </li>}
                 </ol>
                 {add ? <h1>{deck.name}: Add Card</h1> : <h1>Edit Card</h1>}
-                <form>
+                <form name="addCard" onSubmit={handleSave}>
                     <h5>Front</h5>
                         <div>
                             <textarea
@@ -55,7 +55,7 @@ function CardForm({ formData, setFormData, handleSave}) {
                             />
                         </div>
                     <button type="button" className="btn btn-secondary" onClick={handleDone}>Done</button>
-                    <button type="button" className="btn btn-success" onClick={handleSave}>Save</button>
+                    <button type="submit" className="btn btn-success">Save</button>
                 </form>
             </div>
         )
