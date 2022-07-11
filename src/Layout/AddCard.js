@@ -12,20 +12,19 @@ function AddCard() {
     deckId: Number(deckId)
   };
 
-  const [addCard, setAddCard] = useState({ ...initialCardState });
+  const [addCard, setAddCard] = useState( {...initialCardState} );
 
   const handleSave = async (event) => {
     event.preventDefault();
-    console.log(initialCardState);
-    await createCard(addCard);
-    console.log(addCard);
+    //console.log(initialCardState);
+    await createCard(deckId, addCard);
+    //console.log(addCard);
     setAddCard(initialCardState);
   };
 
   return (
     <div>
       <CardForm formData={addCard} setFormData={setAddCard} handleSave={handleSave} />
-      {console.log(addCard)}
     </div>
   );
 }
