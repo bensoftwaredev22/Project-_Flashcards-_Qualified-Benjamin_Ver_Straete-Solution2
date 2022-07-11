@@ -1,85 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { readDeck, readCard, updateCard } from "../utils/api/index";
-import { Link, useParams, useHistory } from "react-router-dom";
-/*
-Displays the card information to edit the current card selected through the edit button
-*/
-
+import { readCard, updateCard } from "../utils/api/index";
+import CardForm from "./CardForm";
+import { useParams, useHistory } from "react-router-dom";
 
 function EditCard() {
-    const { deckId, cardId } = useParams();
-    const [deck, setDeck] = useState({});
+  const { deckId, cardId } = useParams();
+  const history = useHistory();
+  const deckUrl = `/decks/${deckId}`
+  const initialCardState = {
+    front: "",
+    back: "",
+    deckId: Number(deckId),
+    id: cardId
+  };
 
-    const history = useHistory();
+  const [editCard, setEditCard] = useState({ ...initialCardState });
 
-    const initialCardState= {
-        front: "Front side of card",
-        back: "Back side of card",
-        deckId: Number(deckId),
-        id: cardId
-      };
-    
-    const [cardInfo, setCardInfo] = useState({ ...initialCardState});
+  useEffect(() => {
+    readCard(cardId)
+      .then(setEditCard);
+  }, [cardId]);
 
-    useEffect(() => {
-        readDeck(deckId)
-        .then(setDeck);
-    }, [deckId]);
+  const handleSave = async (event) => {
+    event.preventDefault();
+    await updateCard(editCard);
+    history.push(deckUrl);
+  };
 
-    useEffect(() => {
-        readCard(cardId)
-        .then(setCardInfo);
-    }, [cardId]);
-
-    const handleDataChange = ({ target }) => {
-        setCardInfo({
-          ...cardInfo,
-          [target.name]: target.value,
-        });
-      };
-
-    const handleSave = async (event) => {
-        event.preventDefault();
-        await updateCard(setCardInfo)
-        history.push(`/decks/${deck.id}`)
-    }
-
-
-
-
-    return (
-        <div>
-            <ol className="breadcrumb">
-                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                <li className="breadcrumb-item"><Link to={`/decks/${deck.id}`}>{deck.name}</Link></li>
-                <li className="breadcrumb-item active">Edit Card</li>
-            </ol>
-            <h1>{deck.name}: Add Card</h1>
-            <form onSubmit={handleSave}>
-                <h5>Front</h5>
-                  <div>
-                     <textarea
-                      name="front"
-                      onChange={handleDataChange}
-                      value={cardInfo.front}
-                      rows="5"
-                      required
-                     />
-                    </div>
-                <h5>Back</h5>
-                  <div>
-                    <textarea
-                      name="back"
-                      onChange={handleDataChange}
-                      value={cardInfo.back}
-                      rows="5"
-                      required
-                    />
-                  </div>
-                <Link to={`/decks/${deck.id}`} className="btn btn-secondary mr-1">Done</Link>
-                <button tpye="submit" className="btn btn-success">Submit</button>
-            </form>
-        </div>
-    );
+  return (
+    <div>
+      <CardForm formData={editCard} setFormData={setEditCard} handleSave={handleSave} />
+    </div>
+  );
 }
 export default EditCard;

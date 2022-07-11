@@ -3,18 +3,18 @@ import {readDeck } from "../utils/api/index";
 import { useParams, Link, useHistory } from "react-router-dom";
 
 
-function CardForm({}) {
+function CardForm({ formData, setFormData, handleSave}) {
     const { deckId } = useParams();
     const deckUrl = `/decks/${deckId}`;
     const history = useHistory();
-    const [deck, setDeck] = useState();
+    const [deck, setDeck] = useState({});
 
     useEffect(() => {
         readDeck(deckId)
         .then(setDeck);
     }, [deckId]);
 
-    const handleDataChange = () => {
+    const handleDataChange = ( {target} ) => {
         setFormData({
             ...formData,
             [target.name]: target.value,
@@ -40,6 +40,7 @@ function CardForm({}) {
                             name="front"
                             onChange={handleDataChange}
                             value={formData.front}
+                            placeholder="Front side of card"
                             required
                             />
                         </div>
@@ -49,9 +50,12 @@ function CardForm({}) {
                             name="back"
                             onChange={handleDataChange}
                             value={formData.back}
+                            placeholder="Back side of card"
                             required
                             />
                         </div>
+                    <button type="button" className="btn btn-secondary" onClick={handleDone}>Done</button>
+                    <button type="button" className="btn btn-success" onClick={handleSave}>Save</button>
                 </form>
             </div>
         )
