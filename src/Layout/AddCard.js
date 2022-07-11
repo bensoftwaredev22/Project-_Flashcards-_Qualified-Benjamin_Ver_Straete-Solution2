@@ -61,7 +61,7 @@ function AddCard() {
                 <li className="breadcrumb-item active">Add Card</li>
             </ol>
         <h1>{deck.name}: Add Card</h1>
-        <form onSumbit={handleSave}>
+        <form onSubmit={handleSave}>
             <div>
                 <h5>Front</h5>
                 <textarea
