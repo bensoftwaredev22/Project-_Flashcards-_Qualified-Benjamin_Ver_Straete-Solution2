@@ -1,6 +1,6 @@
 import React from "react";
 import { deleteCard } from "../utils/api/index";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 /*
 Used to display the list of cards in a deck
 each card has a edit and delete button
@@ -9,10 +9,13 @@ Used by the Deck.js component
 */
 
 function CardList( {card} ) {
+    const history = useHistory();
+
     function confirmDelete() {
         let confirm = window.confirm("Delete this card?\n\nYou will not be able to recover it.");
         if (confirm) {
             deleteCard(card.id);
+            history.go(0);
         }
     }
 
