@@ -25,14 +25,16 @@ function Home() {
         const handleCreate = () => history.push("/decks/new");
     
         return (
+        <div className="container">
             <table>
               <tbody> 
                  <tr><td>
-                  <button type="button" onClick={handleCreate}>Create Deck</button>
+                  <button type="button" className="btn btn-success" onClick={handleCreate}>Create Deck</button>
                  </td></tr>
                 {deckList}
               </tbody>
             </table>
+        </div>
         );
     }
     return "Loading...";

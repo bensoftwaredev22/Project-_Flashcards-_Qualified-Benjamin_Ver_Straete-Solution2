@@ -42,9 +42,9 @@ function DeckListItem({ deck }) {
             </td>
           </tr>
           <tr>
-            <td> <button type="button" onClick={handleView}>View</button> </td>
-            <td> <button type="button" onClick={handleStudy}>Study</button> </td>
-            <td> <button type="button" onClick={handleDelete}>Delete</button> </td>
+            <td> <button type="button" className="btn btn-info" onClick={handleView}>View</button> </td>
+            <td> <button type="button" className="btn btn-primary" onClick={handleStudy}>Study</button> </td>
+            <td> <button type="button" className="btn btn-danger" onClick={handleDelete}>Delete</button> </td>
           </tr>
         </tbody>
       </table>
